@@ -1,8 +1,9 @@
 package net.sakuragame.eternal.kirraorgan.organ.function
 
-import net.sakuragame.eternal.kirradungeon.server.zone.ZoneLocation
 import net.sakuragame.eternal.kirraorgan.closeTo
 import net.sakuragame.eternal.kirraorgan.organ.IOrgan
+import net.sakuragame.eternal.kirraorgan.organ.impl.DungeonOrgan
+import net.sakuragame.eternal.kirraorgan.organ.impl.NormalOrgan
 import org.bukkit.Location
 
 object FunctionOrgan {
@@ -10,14 +11,23 @@ object FunctionOrgan {
     val organs = mutableListOf<IOrgan<*>>()
 
     inline fun <reified T : IOrgan<*>> getOrganByLocation(loc: Location): T? {
-        return FunctionOrgan.organs.filterIsInstance<T>()
+        return organs.filterIsInstance<T>()
             .find {
-                when (val organBlock = it.block) {
-                    is Location -> organBlock.closeTo(loc.block.location)
-                    is ZoneLocation -> organBlock.toBukkitLocation(loc.world).closeTo(loc.block.location)
+                when (val instance = it as Any?) {
+                    is NormalOrgan -> instance.block.closeTo(loc)
+                    is DungeonOrgan -> instance.block.toBukkitLocation(loc.world).closeTo(loc)
                     else -> return null
                 }
             }
+    }
+
+    fun getOrganExistsByLocation(loc: Location): Boolean {
+        val block = loc.block.location
+        return when {
+            getOrganByLocation<DungeonOrgan>(block) != null -> false
+            getOrganByLocation<NormalOrgan>(block) != null -> false
+            else -> true
+        }
     }
 
     fun add(organ: IOrgan<*>) {

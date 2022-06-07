@@ -1,6 +1,7 @@
 package net.sakuragame.eternal.kirraorgan.organ.function
 
 import net.sakuragame.eternal.kirraorgan.KirraOrganAPI
+import net.sakuragame.eternal.kirraorgan.organ.impl.DungeonOrgan
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -39,7 +40,9 @@ object FunctionOrganCreate {
     }
 
     private fun runCreate(player: Player, block: Block) {
-
+        if (FunctionOrgan.getOrganByLocation<DungeonOrgan>(block.location) != null) {
+            return
+        }
     }
 
     private fun runDelete(player: Player, block: Block) {
