@@ -1,5 +1,7 @@
 package net.sakuragame.eternal.kirraorgan.organ.function
 
+import net.sakuragame.eternal.kirradungeon.server.zone.ZoneLocation
+import net.sakuragame.eternal.kirradungeon.server.zone.data.writer.implement.OreWriter
 import net.sakuragame.eternal.kirraorgan.sendCMessage
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -8,6 +10,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.module.chat.colored
+import taboolib.module.nms.inputSign
 import taboolib.platform.util.buildItem
 
 object FunctionOrganCreate {
@@ -42,6 +45,12 @@ object FunctionOrganCreate {
         if (FunctionOrgan.getOrganExistsByLocation(block.location)) {
             player.sendCMessage("&c[System] &7该地已存在一个脚本方块.")
             return
+        }
+        player.inputSign(arrayOf("", "", "请在第一行输入内容")) { arr ->
+            val id = arr[0]
+            if (id.isEmpty()) {
+
+            }
         }
     }
 

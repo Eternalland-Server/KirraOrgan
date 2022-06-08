@@ -21,6 +21,10 @@ object FunctionOrgan {
             }
     }
 
+    fun getOrganById(id: String): IOrgan<*>? {
+        return organs.find { it.id == id }
+    }
+
     fun getOrganExistsByLocation(loc: Location): Boolean {
         val block = loc.block.location
         return when {

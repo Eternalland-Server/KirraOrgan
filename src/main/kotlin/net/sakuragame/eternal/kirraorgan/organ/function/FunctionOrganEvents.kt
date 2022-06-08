@@ -33,12 +33,12 @@ object FunctionOrganEvents {
     @SubscribeEvent
     fun e(e: PlayerToggleSneakEvent) {
         val player = e.player
-        val groundBlock = player.groundBlock
-        if (!player.isSneaking || groundBlock.type == Material.AIR) {
+        val block = player.groundBlock
+        if (!player.isSneaking || block.type == Material.AIR) {
             return
         }
-        if (!FunctionOrgan.getOrganExistsByLocation(groundBlock.location)) {
-            doPreEval(player = player, block = groundBlock, type = InteractType.SNEAK)
+        if (!FunctionOrgan.getOrganExistsByLocation(block.location)) {
+            doEval(player = player, block = block, type = InteractType.SNEAK)
         }
     }
 
@@ -50,9 +50,12 @@ object FunctionOrganEvents {
         if (block.type == Material.AIR) {
             return
         }
+        if (!FunctionOrgan.getOrganExistsByLocation(block.location)) {
+            return
+        }
         when (action) {
-            Action.LEFT_CLICK_BLOCK -> doPreEval(player, block, InteractType.INTERACT)
-            Action.RIGHT_CLICK_BLOCK -> doPreEval(player, block, InteractType.INTERACT)
+            Action.LEFT_CLICK_BLOCK -> doEval(player, block, InteractType.INTERACT)
+            Action.RIGHT_CLICK_BLOCK -> doEval(player, block, InteractType.INTERACT)
             else -> return
         }
     }
@@ -65,24 +68,39 @@ object FunctionOrganEvents {
             return
         }
         val block = to.block.getRelative(BlockFace.DOWN)
-        doPreEval(player, block, InteractType.WALK)
+        if (!FunctionOrgan.getOrganExistsByLocation(block.location)) {
+            return
+        }
+        doEval(player, block, InteractType.WALK)
     }
 
-    private fun doPreEval(player: Player, block: Block, type: InteractType) {
+    private fun doEval(player: Player, block: Block, type: InteractType) {
+        val result = doEvalDungeon(player = player, block = block, type = type)
+        if (!result) {
+            doEvalNormal(player = player, block = block, type = type)
+        }
+    }
+
+    private fun doEvalDungeon(player: Player, block: Block, type: InteractType): Boolean {
         if (KirraOrganAPI.dungeonPluginSupported) {
-            val profile = player.profile() ?: return
-            val dungeon = profile.getIDungeon() ?: return
-            val dungeonOrgan = FunctionOrgan.getOrganByLocation<DungeonOrgan>(block.location) ?: return
+            val profile = player.profile() ?: return false
+            val dungeon = profile.getIDungeon() ?: return false
+            val dungeonOrgan = FunctionOrgan.getOrganByLocation<DungeonOrgan>(block.location) ?: return false
             if (!dungeonOrgan.check(player, type) || dungeonOrgan.dungeonId != dungeon.zone.id) {
-                return
+                return false
             }
             dungeonOrgan.eval(player)
-            return
+            return true
         }
-        val normalOrgan = FunctionOrgan.getOrganByLocation<NormalOrgan>(block.location) ?: return
+        return false
+    }
+
+    private fun doEvalNormal(player: Player, block: Block, type: InteractType): Boolean {
+        val normalOrgan = FunctionOrgan.getOrganByLocation<NormalOrgan>(block.location) ?: return false
         if (!normalOrgan.check(player, type)) {
-            return
+            return false
         }
         normalOrgan.eval(player)
+        return true
     }
 }
