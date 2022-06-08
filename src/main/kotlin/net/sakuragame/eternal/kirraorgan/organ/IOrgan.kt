@@ -22,4 +22,12 @@ interface IOrgan<T> {
         baffle.next(player.name)
         return true
     }
+
+    fun check(player: Player, type: InteractType): Boolean {
+        return when {
+            !baffle(player) -> false
+            type != interactType -> false
+            else -> true
+        }
+    }
 }

@@ -24,9 +24,9 @@ object FunctionOrgan {
     fun getOrganExistsByLocation(loc: Location): Boolean {
         val block = loc.block.location
         return when {
-            getOrganByLocation<DungeonOrgan>(block) != null -> false
-            getOrganByLocation<NormalOrgan>(block) != null -> false
-            else -> true
+            getOrganByLocation<DungeonOrgan>(block) != null -> true
+            getOrganByLocation<NormalOrgan>(block) != null -> true
+            else -> false
         }
     }
 

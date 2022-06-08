@@ -1,7 +1,6 @@
 package net.sakuragame.eternal.kirraorgan.organ.function
 
-import net.sakuragame.eternal.kirraorgan.KirraOrganAPI
-import net.sakuragame.eternal.kirraorgan.organ.impl.DungeonOrgan
+import net.sakuragame.eternal.kirraorgan.sendCMessage
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -13,7 +12,7 @@ import taboolib.platform.util.buildItem
 
 object FunctionOrganCreate {
 
-    val organWand by lazy {
+    private val organWand by lazy {
         buildItem(Material.STICK) {
             name = "&e&l脚本魔杖".colored()
             lore += ""
@@ -40,7 +39,8 @@ object FunctionOrganCreate {
     }
 
     private fun runCreate(player: Player, block: Block) {
-        if (FunctionOrgan.getOrganByLocation<DungeonOrgan>(block.location) != null) {
+        if (FunctionOrgan.getOrganExistsByLocation(block.location)) {
+            player.sendCMessage("&c[System] &7该地已存在一个脚本方块.")
             return
         }
     }

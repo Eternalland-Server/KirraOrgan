@@ -1,6 +1,5 @@
 package net.sakuragame.eternal.kirraorgan.organ.impl
 
-import net.sakuragame.eternal.kirradungeon.server.Profile.Companion.profile
 import net.sakuragame.eternal.kirradungeon.server.zone.ZoneLocation
 import net.sakuragame.eternal.kirraorgan.event.OrganEvalEvent
 import net.sakuragame.eternal.kirraorgan.organ.IOrgan
@@ -19,7 +18,7 @@ class DungeonOrgan : IOrgan<ZoneLocation> {
 
     override val links: MutableList<ZoneLocation>
 
-    private val dungeonId: String
+    val dungeonId: String
 
     constructor(block: ZoneLocation, id: String, interactType: InteractType, delay: Long, links: MutableList<ZoneLocation>, dungeonId: String) {
         this.block = block
@@ -31,11 +30,6 @@ class DungeonOrgan : IOrgan<ZoneLocation> {
     }
 
     override fun eval(player: Player) {
-        val profile = player.profile()
-        val dungeon = profile.getIDungeon() ?: return
-        if (dungeon.zone.id != dungeonId) {
-            return
-        }
         OrganEvalEvent(player, id, block.toBukkitLocation(player.world)).call()
     }
 }
