@@ -1,7 +1,6 @@
 package net.sakuragame.eternal.kirraorgan.organ.function
 
-import net.sakuragame.eternal.kirradungeon.server.zone.ZoneLocation
-import net.sakuragame.eternal.kirradungeon.server.zone.data.writer.implement.OreWriter
+import net.sakuragame.eternal.kirraorgan.Loader
 import net.sakuragame.eternal.kirraorgan.sendCMessage
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -15,12 +14,12 @@ import taboolib.platform.util.buildItem
 
 object FunctionOrganCreate {
 
-    private val organWand by lazy {
+    val organWand by lazy {
         buildItem(Material.STICK) {
             name = "&e&l脚本魔杖".colored()
             lore += ""
             lore += "&7左键创建脚本方块".colored()
-            lore += "&7右键删除脚本方块".colored()
+            lore += "&7右键编辑脚本方块".colored()
             lore += ""
             shiny()
         }
@@ -36,7 +35,7 @@ object FunctionOrganCreate {
         }
         when (e.action) {
             Action.LEFT_CLICK_BLOCK -> runCreate(player, block)
-            Action.RIGHT_CLICK_BLOCK -> runDelete(player, block)
+            Action.RIGHT_CLICK_BLOCK -> runEdit(player, block)
             else -> return
         }
     }
@@ -49,12 +48,18 @@ object FunctionOrganCreate {
         player.inputSign(arrayOf("", "", "请在第一行输入内容")) { arr ->
             val id = arr[0]
             if (id.isEmpty()) {
-
+                player.sendCMessage("&c[System] &7格式错误.")
+                return@inputSign
             }
+            Loader.set(player, block, id)
+            player.sendCMessage("&c[System] &7正在创建.")
         }
     }
 
-    private fun runDelete(player: Player, block: Block) {
-
+    private fun runEdit(player: Player, block: Block) {
+        if (!FunctionOrgan.getOrganExistsByLocation(block.location)) {
+            player.sendCMessage("&c[System] &7该地不存在脚本方块.")
+            return
+        }
     }
 }

@@ -12,7 +12,7 @@ object KirraOrganAPI {
     }
 
     fun reload() {
-        val file = File(KirraOrgan.plugin.dataFolder, "config.yml")
+        val file = File(KirraOrgan.plugin.dataFolder, "organs.yml")
         if (!file.exists()) {
             file.createNewFile()
         }

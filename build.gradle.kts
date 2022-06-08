@@ -5,6 +5,12 @@ plugins {
 }
 
 taboolib {
+    description {
+        dependencies {
+            name("Skript")
+            name("KirraDungeonServer").optional(true)
+        }
+    }
     install("common")
     install("common-5")
     install("module-chat")
@@ -30,6 +36,7 @@ repositories {
 
 dependencies {
     compileOnly("com.github.SkriptLang:Skript:2.6.1")
+    compileOnly("net.sakuragame:DungeonSystem-Server-API:1.1.3-SNAPSHOT@jar")
     compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
