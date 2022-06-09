@@ -5,12 +5,19 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
+import taboolib.common.platform.command.mainCommand
 import taboolib.common.platform.command.subCommand
+import taboolib.expansion.createHelper
 import taboolib.platform.util.giveItem
 
 @Suppress("SpellCheckingInspection")
 @CommandHeader(name = "KirraOrgan", aliases = ["ko"])
 object Commands {
+
+    @CommandBody
+    val main = mainCommand {
+        createHelper()
+    }
 
     @CommandBody
     val reload = subCommand {

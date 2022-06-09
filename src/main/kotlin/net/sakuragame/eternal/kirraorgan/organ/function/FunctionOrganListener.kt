@@ -5,7 +5,6 @@ import net.sakuragame.eternal.kirraorgan.KirraOrganAPI
 import net.sakuragame.eternal.kirraorgan.organ.InteractType
 import net.sakuragame.eternal.kirraorgan.organ.impl.DungeonOrgan
 import net.sakuragame.eternal.kirraorgan.organ.impl.NormalOrgan
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -17,7 +16,6 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
-import taboolib.platform.util.broadcast
 import taboolib.platform.util.groundBlock
 
 object FunctionOrganEvents {

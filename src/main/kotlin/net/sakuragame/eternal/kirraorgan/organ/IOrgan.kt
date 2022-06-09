@@ -15,17 +15,17 @@ interface IOrgan<T> {
 
     fun eval(player: Player)
 
-    fun baffle(player: Player): Boolean {
-        if (!baffle.hasNext(player.name)) {
+    fun baffle(): Boolean {
+        if (!baffle.hasNext()) {
             return false
         }
-        baffle.next(player.name)
+        baffle.next()
         return true
     }
 
     fun check(player: Player, type: InteractType): Boolean {
         return when {
-            !baffle(player) -> false
+            !baffle() -> false
             type != interactType -> false
             else -> true
         }

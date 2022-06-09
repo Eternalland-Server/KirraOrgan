@@ -39,9 +39,6 @@ object Loader {
     private fun loadDungeonOrgan(id: String): DungeonOrgan? {
         val rawLoc = KirraOrgan.organs.getString("$id.location") ?: return null
         val loc = ZoneLocation.parseToZoneLocation(rawLoc) ?: return null
-        InteractType.values().forEach {
-            info(it.name)
-        }
         val interactType = InteractType.values().find { KirraOrgan.organs.getString("$id.interact-type") == it.name } ?: return null
         val delay = KirraOrgan.organs.getInt("$id.delay").toLong()
         val links = KirraOrgan.organs.getStringList("$id.links")
