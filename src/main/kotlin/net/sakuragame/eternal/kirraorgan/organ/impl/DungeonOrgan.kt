@@ -16,16 +16,13 @@ class DungeonOrgan : IOrgan<ZoneLocation> {
     override val interactType: InteractType
     override val baffle: Baffle
 
-    override val links: MutableList<ZoneLocation>
-
     val dungeonId: String
 
-    constructor(block: ZoneLocation, id: String, interactType: InteractType, delay: Long, links: MutableList<ZoneLocation>, dungeonId: String) {
+    constructor(block: ZoneLocation, id: String, interactType: InteractType, delay: Long, dungeonId: String) {
         this.block = block
         this.id = id
         this.interactType = interactType
         this.baffle = Baffle.of(delay, TimeUnit.MILLISECONDS)
-        this.links = links
         this.dungeonId = dungeonId
     }
 

@@ -33,6 +33,7 @@ object FunctionOrganCreate {
         if (!item.isSimilar(organWand) || block.type == Material.AIR) {
             return
         }
+        e.isCancelled = true
         when (e.action) {
             Action.LEFT_CLICK_BLOCK -> runCreate(player, block)
             Action.RIGHT_CLICK_BLOCK -> runEdit(player, block)

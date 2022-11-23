@@ -18,7 +18,7 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
 import taboolib.platform.util.groundBlock
 
-object FunctionOrganEvents {
+object FunctionOrganListener {
 
     @SubscribeEvent
     fun e(e: PlayerQuitEvent) {

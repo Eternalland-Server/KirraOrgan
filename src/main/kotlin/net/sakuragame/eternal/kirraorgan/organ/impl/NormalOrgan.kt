@@ -16,14 +16,11 @@ class NormalOrgan : IOrgan<Location> {
     override val interactType: InteractType
     override val baffle: Baffle
 
-    override val links: MutableList<Location>
-
-    constructor(block: Location, id: String, interactType: InteractType, delay: Long, links: MutableList<Location>) {
+    constructor(block: Location, id: String, interactType: InteractType, delay: Long) {
         this.block = block
         this.id = id
         this.interactType = interactType
         this.baffle = Baffle.of(delay, TimeUnit.MILLISECONDS)
-        this.links = links
     }
 
     override fun eval(player: Player) {

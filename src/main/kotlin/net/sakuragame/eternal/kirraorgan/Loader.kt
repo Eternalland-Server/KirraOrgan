@@ -30,10 +30,7 @@ object Loader {
         val loc = KirraOrgan.organs.getString("$id.location")?.toLocation() ?: return null
         val interactType = InteractType.values().find { it.name == KirraOrgan.organs.getString("$it.interact-type") } ?: return null
         val delay = KirraOrgan.organs.getInt("$id.delay").toLong()
-        val links = KirraOrgan.organs.getStringList("$id.links")
-            .map { it.toLocation() ?: return null }
-            .toMutableList()
-        return NormalOrgan(loc, id, interactType, delay, links)
+        return NormalOrgan(loc, id, interactType, delay)
     }
 
     private fun loadDungeonOrgan(id: String): DungeonOrgan? {
@@ -41,11 +38,8 @@ object Loader {
         val loc = ZoneLocation.parseToZoneLocation(rawLoc) ?: return null
         val interactType = InteractType.values().find { KirraOrgan.organs.getString("$id.interact-type") == it.name } ?: return null
         val delay = KirraOrgan.organs.getInt("$id.delay").toLong()
-        val links = KirraOrgan.organs.getStringList("$id.links")
-            .map { ZoneLocation.parseToZoneLocation(it) ?: return null }
-            .toMutableList()
         val dungeonId = KirraOrgan.organs.getString("$id.dungeon-id") ?: return null
-        return DungeonOrgan(loc, id, interactType, delay, links, dungeonId)
+        return DungeonOrgan(loc, id, interactType, delay, dungeonId)
     }
 
     private fun save() {

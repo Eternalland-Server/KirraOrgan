@@ -4,7 +4,6 @@ import net.sakuragame.eternal.kirraorgan.closeTo
 import net.sakuragame.eternal.kirraorgan.organ.IOrgan
 import net.sakuragame.eternal.kirraorgan.organ.impl.DungeonOrgan
 import net.sakuragame.eternal.kirraorgan.organ.impl.NormalOrgan
-import org.bukkit.Bukkit
 import org.bukkit.Location
 
 object FunctionOrgan {
@@ -22,7 +21,7 @@ object FunctionOrgan {
             }
     }
 
-    fun getOrganById(id: String): IOrgan<*>? {
+    fun getOrganById(id: String): IOrgan<out Any>? {
         return organs.find { it.id == id }
     }
 

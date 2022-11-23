@@ -11,8 +11,6 @@ interface IOrgan<T> {
     val interactType: InteractType
     val baffle: Baffle
 
-    val links: MutableList<T>
-
     fun eval(player: Player)
 
     fun baffle(): Boolean {
